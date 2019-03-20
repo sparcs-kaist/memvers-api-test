@@ -1,0 +1,3 @@
+dn: ou=People,dc=sparcs,dc=org
+ou: People
+objectclass: organizationalUnit

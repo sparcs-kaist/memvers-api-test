@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  ldap-server:
+    container_name: ldap-server
+    image: osixia/openldap:latest
+    environment:
+      LDAP_LOG_LEVEL: "256"
+      LDAP_ORGANISATION: "SPARCS"
+      LDAP_DOMAIN: "sparcs.org"
+      LDAP_BASE_DN: "dc=sparcs,dc=org"
+      LDAP_ADMIN_PASSWORD: "admin"
+      LDAP_CONFIG_PASSWORD: "config"
+      LDAP_READONLY_USER: "false"
+      LDAP_RFC2307BIS_SCHEMA: "false"
+      LDAP_BACKEND: "mdb"
+      LDAP_TLS: "false"
+      LDAP_REPLICATION: "false"
+      KEEP_EXISTING_CONFIG: "false"
+      LDAP_REMOVE_CONFIG_AFTER_SETUP: "true"
+    tty: true
+    stdin_open: true
+    domainname: "sparcs.org"
+    hostname: "sparcs.org"
+  mysql-server:
+    container_name: mysql-server
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+    command: --default-authentication-plugin=mysql_native_password
+  mongodb-server:
+    container_name: mongodb-server
+    image: mongo:4
+  memvers-api-server:
+    container_name: memvers-api-server
+    build: ./memvers-api
+    tty: true
+    links:
+      - ldap-server:ldap-server
+      - mysql-server:mysql-server
+      - mongodb-server:mongodb-server
+    depends_on:
+      - ldap-server
+      - mysql-server
+      - mongodb-server
+    ports:
+      - 80:80

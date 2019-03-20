@@ -1,0 +1,13 @@
+dn: uid=wheel,ou=People,dc=sparcs,dc=org
+uid: wheel
+cn: wheel
+objectClass: account
+objectClass: posixAccount
+objectClass: top
+objectClass: shadowAccount
+shadowMax: 99999
+shadowWarning: 7
+loginShell: /bin/bash
+uidNumber: 1000
+gidNumber: 200
+homeDirectory: /home/wheel
