@@ -8,6 +8,7 @@ docker exec ldap-server ldappasswd -D "cn=admin,dc=sparcs,dc=org" -w admin -s wh
 docker exec ldap-server rm /wheel.ldif
 
 echo "create database nugu" | docker exec -i mysql-server mysql -hlocalhost -uroot -proot
+echo "create database aliases" | docker exec -i mysql-server mysql -hlocalhost -uroot -proot
 docker exec -i mysql-server mysql -hlocalhost -uroot -proot nugu < ./nugu.sql
 
 docker exec memvers-api-server service postfix start

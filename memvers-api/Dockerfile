@@ -7,6 +7,9 @@ RUN mkdir -p /SPARCS/mail/aliases.d/
 RUN git clone https://github.com/sparcs-kaist/memvers-api.git
 WORKDIR /memvers-api
 RUN npm install
+
+# In prod server, it uses postgresql
+RUN npm install mysql2
 COPY ./local_config.js /memvers-api/config/local_config.js
 
 COPY ./postfix.conf /postfix.conf
